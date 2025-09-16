@@ -1,0 +1,31 @@
+# React Frontend Deployment on Nginx (Sub-path `/test-deployment1/`)
+
+## 1️⃣ Create Deployment Directory
+
+```bash
+# Create directory for this deployment
+sudo mkdir -p /var/www/html/test-deployment1
+
+# Change ownership and give permission
+sudo chown -R $USER:www-data /var/www/html/test-deployment1
+sudo chmod -R 755 /var/www/html/test-deployment1
+2️⃣ Configure Nginx
+
+Create a new site configuration:
+
+sudo nano /etc/nginx/sites-available/test-deployment1
+
+
+Add the following content:
+
+server {
+    listen 80;
+    server_name _;  # responds to any IP/domain
+
+    root /var/www/html;
+    index index.html;
+
+    location /test-deployment1/ {
+        try_files $uri /test-deployment1/index.html;
+    }
+}
